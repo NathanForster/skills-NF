@@ -14,6 +14,7 @@ These commands are designed to be dropped into any project and used across sessi
 | [`/docs-review`](docs-review.md) | Deep review, cross-reference, and backfill of the docs folder, plus composite PDF rebuild |
 | [`/build-docs`](build-docs.md) | Build the consolidated documentation-set PDF (or render a single Markdown file) via the shared docset engine |
 | [`/run`](run.md) | Launch the project's app in a named mode, driven by a `RUN.md` mode registry |
+| [`/humanizer`](humanizer.md) | Edit text so it reads less like an LLM wrote it: substance and structure first, then phrasing |
 
 ## Installation
 
@@ -176,6 +177,28 @@ Launches the project's app in a requested run mode — `/run <mode>`, or bare `/
 The command carries no project knowledge of its own: a `RUN.md` in the project root is the source of truth, defining the available modes, each mode's launcher and arguments, the launch sequence, and any gates. If the project has no `RUN.md`, the command offers to bootstrap one from what's actually in the repo (launch scripts, README, CI config) — verifying each mode before writing it down.
 
 Pairs with `RUN.md` the same way `/handoff` pairs with `HANDOFF.md`.
+
+---
+
+### `/humanizer`
+
+Reviews and edits text so it reads less like an LLM wrote it. The aim is better writing (specific, sourced, plainly structured), not detector evasion.
+
+- `/humanizer <file or pasted text>` returns the full revised text, a change log grouped by level, and every `[ADD: ...]` placeholder the writer needs to fill.
+- `/humanizer <file> review only` ranks the top tells with quoted snippets and suggested fixes, without rewriting.
+
+It edits in priority order: substance, then structure, then phrasing, then typography. That order comes from the StoryScope study (Russell et al., COLM 2026), where editing AI stories to remove cliches and purple prose barely dented a detector built on narrative choices (95.5% to 93.9% macro-F1). It never invents facts, names, quotes or citations. Where the text needs one, it inserts a placeholder instead.
+
+Support files live in [`humanizer/`](humanizer/):
+
+- `surface-patterns.txt`: sentence and formatting tells, paraphrased from Wikipedia's "Signs of AI writing", including what is *not* a reliable tell.
+- `narrative-patterns.txt`: StoryScope's 30 core narrative features with human vs AI rates, per-model fingerprints, and nonfiction analogs.
+- `scan.py`: a standard-library regex scanner (`python scan.py FILE [--json]`, `-` for stdin) that reports hits by category with line numbers and a weighted density band. Hits are leads, not verdicts.
+
+Two conventions to keep if you extend it:
+
+- Support docs use `.txt`, not `.md`. Claude Code loads every `.md` under `commands/` as a slash command, so a Markdown reference file would show up as a junk command.
+- The command reaches its support files by absolute path (`C:/.ai/.claude/commands/humanizer/...`), because commands do not resolve relative paths. If you clone this repo somewhere else, update those paths in `humanizer.md`.
 
 ---
 

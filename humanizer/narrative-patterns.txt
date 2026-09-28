@@ -1,0 +1,398 @@
+NARRATIVE PATTERNS: AI-TYPICAL CHOICES IN STORY CONSTRUCTION
+===========================================================
+
+Source: Russell, Rajendhran, Pham, Iyyer and Wieting, "StoryScope:
+Investigating idiosyncrasies in AI fiction", COLM 2026 (arXiv 2604.03136),
+paraphrased. Sections 4.1, 4.2 and 5, and appendix Tables 14 to 17.
+
+Read this file before surface-patterns.txt when the text is fiction. The
+reason is the central finding below: in fiction, the tells that survive
+editing live in the story's construction, not its sentences.
+
+
+1. WHAT THE STUDY DID
+====================
+
+The authors built a pipeline that extracts interpretable, discourse-level
+narrative features from a story: things like who drives the resolution,
+whether time runs straight, how emotions are conveyed, whether the narrator
+spells out the theme. About 300 features across 10 dimensions (plot, agents,
+setting, temporal structure, perspective, social networks and others),
+deliberately excluding stylistic cues such as word choice and syntax.
+
+Corpus. 10,272 writing prompts, each derived from a published human story
+(the human side comes from the Books3 collection of published books). Each
+prompt was then written as a story by five models: Claude Sonnet 4.6,
+DeepSeek V3.2, Gemini 3 Flash, GPT-5.4 and Kimi K2.5. That gives six parallel
+versions of every story, about 61,600 in total, each around 5,000 words.
+
+Headline results.
+  - Narrative features alone separate human from AI stories at 93.2 percent
+    macro-F1, keeping over 97 percent of the performance of models that are
+    also allowed to see style.
+  - They attribute a story to one of the six sources at 68.4 percent macro-F1,
+    against a 16.7 percent chance baseline.
+  - A compact core of 30 features carries much of the human-versus-AI signal.
+  - The five models cluster together in narrative space, and human stories sit
+    in a separate, more spread-out region. The average distance between human
+    and AI centroids is 1.6 times the average distance between AI centroids,
+    and even the closest human-AI pair is further apart than the most distant
+    AI-AI pair.
+  - Human stories are rarer. 24.7 percent of human stories fall in the rarest
+    10 percent of the corpus, against 7.1 percent of AI stories. For a given
+    prompt, the human version is the rarest of the six 57.8 percent of the
+    time, where chance would be 16.7 percent.
+
+
+2. THE RESULT THAT SHAPES THIS COMMAND: SURFACE EDITING BARELY HELPS
+===================================================================
+
+The authors asked whether their narrative detector still works after a story
+has been edited to remove surface-level AI artifacts. They used LAMP, a
+span-level rewriting framework from Chakrabarty et al. (2025) that finds and
+rewrites seven categories of AI writing problems, including cliche, redundant
+exposition and purple prose, guided by 25 examples from professional writers.
+They applied it to 278 Gemini-written stories, with Gemini doing the
+rewriting.
+
+After the edit, the narrative classifier still detected the stories at 93.9
+percent macro-F1, against 95.5 percent before. A drop of 1.6 points. The
+narrative features are close to independent of the prose artifacts that
+surface editing targets: cleaning up cliches and purple prose does not change
+causal linearity, thematic explicitness or sensory over-description.
+
+What this means for editing. Polishing sentences leaves the story's shape
+exactly as AI-typical as it was. If the goal is fiction that reads as
+authored, the work is in plot, time, resolution and what the narrator chooses
+to explain. Do that first, then fix the prose.
+
+Caveats. Hold these firmly when applying the numbers.
+  - Long-form fiction only: stories around 5,000 words. The findings were not
+    tested on flash fiction, poetry, screenplays or nonfiction.
+  - Specific model versions from 2026. Newer versions will drift, and a
+    fingerprint that holds for Claude Sonnet 4.6 may not hold for its
+    successor.
+  - The human baseline is published fiction from books, so "human" here means
+    professionally written and edited work, not typical amateur writing. An
+    unpublished human draft can easily look "AI-typical" on these measures.
+  - The robustness test used one model family (Gemini), one rewriting method,
+    and 278 stories.
+  - Features were extracted by an automated pipeline, validated by human
+    annotators on a sample.
+  - Every number below is a population rate. 52 percent of human narrators
+    also state the theme outright. None of these features is wrong in a single
+    story. The problem is defaulting to all of them at once, every time.
+
+
+3. THE 30 CORE FEATURES, IN 7 GROUPS
+===================================
+
+From Table 16. Three features (Reference Explicitness, Subplot Integration,
+Emotional Expression) appear twice with different options, so the 33 rows
+below cover 30 features.
+
+How to read the tables.
+  - (1-5) rows are means on a 1-to-5 scale.
+  - (ord) rows are means over ordinal codes.
+  - (%) rows are the share of stories with that option.
+  - The AI column averages all five models.
+  - Gap is Human minus AI, computed from the rounded values shown. Negative
+    means AI does it more. The paper's own gaps come from unrounded means and
+    can differ in the last digit.
+
+
+3.1 Thematic over-determination  (AI-elevated)
+----------------------------------------------
+AI spells out what the story means instead of trusting the reader.
+
+  Feature                                               Human     AI     Gap
+  Thematic explicitness and moralizing (1-5)             3.28    3.94   -0.66
+  Moral / philosophical weighting (1-5)                  3.26    3.68   -0.42
+  Thematic unity (1-5)                                   4.41    4.74   -0.33
+  Narrator explicitly comments on theme: yes (%)           52      77     -25
+  Dialogue used for philosophical debate (%)               34      59     -25
+  Intertextual references as implicit echoes (%)           50      72     -22
+
+The paper's example: a grieving character's arc typically ends with the
+narrator stating the lesson learned.
+
+Editing moves:
+  - Find the sentence where the narrator names the lesson. It is usually in
+    the last paragraph or two, sometimes at the end of every scene. Delete it
+    and end on the action or image before it.
+  - Rewrite dialogue that debates the theme into dialogue where people want
+    something concrete from each other: money, an apology, a lift home.
+  - Let one thread pull against the theme, or have nothing to do with it.
+    Perfect thematic unity is itself a signature.
+  - Replace a vague allusion ("like something out of an old myth") with a
+    specific named work if the writer has one in mind, or cut it. Do not
+    invent the reference; mark [ADD: which work?] if it matters.
+  - Let some scenes be about nothing larger than themselves.
+
+
+3.2 Embodied and sensory overwriting  (AI-elevated)
+---------------------------------------------------
+AI conveys feeling through bodies and surroundings, almost never by naming it.
+
+  Feature                                               Human     AI     Gap
+  Emotion conveyed through the body (%)                    38      81     -43
+  Setting as a mirror of inner state (1-5)               3.58    4.07   -0.49
+  Environmental and ecological emphasis (1-5)            2.83    3.21   -0.38
+  Smell among the dominant senses (%)                      57      82     -25
+  Sensory density (1-5)                                  3.66    3.93   -0.27
+  Depth of interior access (1-5)                         3.67    3.93   -0.26
+
+The paper's example: where a human writes that a character felt afraid, AI
+renders a tightening chest, a cold sweat and the lamplight dimming. Humans
+use explicit emotion labels in 29 percent of stories, AI in 8 percent (see
+3.7).
+
+Editing moves:
+  - Name some emotions plainly. "He was afraid." "She was bored of him." One
+    direct label often does more than three bodily metaphors.
+  - Keep the physical cue only where it carries something the label cannot.
+    Cut the stock set: tight chest, breath she did not know she was holding,
+    jaw clenching, heart hammering, stomach dropping.
+  - Stop weather and light from tracking mood. Let it rain at the wedding and
+    be sunny at the funeral, or leave the weather out.
+  - Cut smell unless the smell does work in the plot or characterization.
+  - Thin out narrated interiority. Not every beat needs the character's inner
+    state explained; some can be left to the reader.
+
+
+3.3 Structural streamlining  (AI-elevated)
+------------------------------------------
+AI tells one clean story in one line, driven and resolved by the protagonist.
+
+  Feature                                               Human     AI     Gap
+  Causal chain continuity (1-5)                          3.92    4.20   -0.28
+  Spatial granularity (ord)                              2.27    2.53   -0.26
+  Resolution driven by the protagonist's choice (%)        46      69     -23
+  Characters introduced by external description (%)        30      52     -22
+  No subplots (%)                                          57      79     -22
+  Resolved through internal understanding (%)              27      47     -20
+  Opening spatial grounding (ord)                        2.12    2.33   -0.21
+  Character investment before the threat (1-5)           2.76    2.99   -0.23
+
+The paper's example: a human mystery might open at the funeral and spiral
+backward through decades; AI tells it from the first clue to the grand
+reveal.
+
+Editing moves:
+  - Break the causal chain somewhere. Let an event happen that the previous
+    one did not cause, and let a thread go nowhere.
+  - Let the resolution come from outside the protagonist, from luck, another
+    person, or circumstance, or leave it partly unresolved. Humans are much
+    more comfortable with an ending nobody chose.
+  - Replace the acceptance-and-understanding ending ("and she finally
+    understood that...") with an event, a decision that costs something, or an
+    open question.
+  - Add a subplot, or restore one that was cut for tidiness.
+  - Introduce people through what they say or do, not through a description
+    of their face and clothes.
+  - Do not open by establishing place. Start in the middle of something.
+  - Bring the threat in earlier. AI spends longer making the reader like a
+    character before anything happens to them.
+
+
+3.4 Named references  (human-elevated)
+--------------------------------------
+Humans name real things. AI gestures at them.
+
+  Feature                                               Human     AI     Gap
+  Intertextual strategy: explicit named reference (%)      47      24     +23
+  Reference explicitness: balanced mix (%)                 37      16     +21
+
+AI generally avoids naming real works, authors, brands and places, and sticks
+to vague allusion.
+
+Editing moves:
+  - Where a character would name the song, book, street, shop or brand, name
+    it. Real proper nouns are among the strongest signals of an actual person
+    with actual experiences.
+  - Mix explicit references with implicit ones rather than using only one kind.
+  - Never fabricate a reference, a quote, or a real person's action. If the
+    story needs a specific name the writer has not supplied, insert
+    [ADD: which band? which street?] and let the writer choose.
+
+
+3.5 Reader address  (human-elevated)
+------------------------------------
+Humans acknowledge that someone is reading. AI writes as though nobody is.
+
+  Feature                                               Human     AI     Gap
+  Fourth-wall permeability (ord)                         0.67    0.39   +0.28
+  Direct reader address (ord)                            0.28    0.07   +0.21
+
+The paper summarizes these as humans breaking the fourth wall far more often
+(roughly 67 against 39 percent) and addressing the reader directly roughly
+four times as often (28 against 7 percent).
+
+Editing moves:
+  - Where the voice supports it, let the narrator acknowledge the telling: an
+    aside, a "you", a narrator who admits to not knowing or to shaping the
+    story.
+  - Use this sparingly and only in voices that would do it. A forced
+    "dear reader" dropped into a close third-person story is a new tell, not a
+    fix.
+
+
+3.6 Temporal complexity  (human-elevated)
+-----------------------------------------
+Humans play with time. AI runs the clock forward.
+
+  Feature                                               Human     AI     Gap
+  Recontextualization after a surprise (1-5)             3.28    2.95   +0.33
+  Chronological discontinuity (1-5)                      2.40    2.12   +0.28
+  Nonlinear framing to delay disclosure (1-5)            1.96    1.68   +0.28
+  Anachrony intensity (1-5)                              2.58    2.31   +0.27
+
+Editing moves:
+  - Consider opening after the main event and working back to it.
+  - Use a flashback or flash-forward to hold back a key fact until it lands
+    hardest.
+  - When a surprise arrives, let it change how earlier scenes read, and let
+    the text register that change.
+  - Allow time skips without a transitional paragraph explaining them.
+
+
+3.7 Narrative diversity  (human-elevated)
+-----------------------------------------
+Humans range more widely. AI settles into a narrow set of defaults.
+
+  Feature                                               Human     AI     Gap
+  Location variety (ord)                                 1.34    1.08   +0.26
+  Dialogue-to-narration proportion (1-5)                 2.95    2.70   +0.25
+  Subplots that parallel the theme obliquely (%)           42      21     +21
+  Protagonist framed as morally ambivalent (%)             59      38     +21
+  Emotion conveyed by explicit labels (%)                  29       8     +21
+
+Editing moves:
+  - Move the story through more places.
+  - Convert some summarized narration into dialogue.
+  - Keep subplots, and let them echo the main theme indirectly rather than
+    restating it.
+  - Let the protagonist do something the story neither endorses nor punishes.
+    AI protagonists are mostly good people having an arc.
+  - See 3.2 on naming emotions.
+
+
+4. PER-MODEL FINGERPRINTS
+========================
+
+From Section 5 and Table 17. Each source also has features that are rare
+elsewhere. Counts of distinctive fingerprint features: Human 32, Claude 26,
+GPT 11, Gemini 11, DeepSeek 7, Kimi 3. Per-source attribution accuracy
+(macro-F1 with style, then narrative-only): Human 93.0 and 88.5, Claude 89.3
+and 77.1, GPT 82.1 and 73.0, and Gemini, DeepSeek and Kimi together between
+55 and 67. Gemini, DeepSeek and Kimi are the most confused with each other;
+the paper calls them triplets.
+
+Use these to diagnose a draft, not to name its author.
+
+Claude (Sonnet 4.6): "keeps it cool". The most distinctive AI profile.
+  Events escalate less than in any other source, event types vary least, and
+  the narrative voice is the most uniform. It honors and extends storytelling
+  conventions rather than subverting them (62 percent of stories, against 39
+  to 56 percent elsewhere). It favors epilogues and flash-forward endings,
+  avoids dream sequences, leans to uncanny or haunted moods, and prefers quiet
+  endings to "avalanche" ones.
+  Fix: let the stakes compound and the events differ in kind. Let the voice
+  change register under pressure. Cut the epilogue. Break a convention the
+  genre expects instead of honoring it. Consider one structural rupture, a
+  dream or a hard time cut.
+
+GPT (5.4): "likes to gossip".
+  Gossip and rumor drive the plot (64 percent, against 44 to 55 percent
+  elsewhere). It frames stories as reflections on events years or decades
+  ago, subverts reader expectations more than other models (41 percent, against
+  27 to 36), avoids habitual narration, leaves reconciliations partial, and
+  builds ensemble social networks at roughly human levels.
+  Fix: replace reported rumor with the scene itself. Move the narrator's
+  vantage closer to the events. Use habitual narration ("every Sunday he
+  would...") where the life described has routines.
+
+Gemini (3 Flash): tidy and bleak.
+  The tidiest endings and the most extended denouements, and the bleakest
+  settings (88 percent tagged bleak and oppressive). Also: protagonists whose
+  social circle expands, mostly direct speech, siege or ordeal plots, full
+  personal names, frequent flashbacks, and characters introduced by external
+  description.
+  Fix: end sooner and leave something open. Cut the denouement. Let the
+  setting be ordinary, mixed, or pleasant. Introduce people through action.
+
+DeepSeek (V3.2): front-loads.
+  Gives away crucial context at the start that other sources hold back. Also:
+  a visible narrator, emotion shown through behavioral cues, backstory spread
+  evenly through the story, and embedded stories told inside scenes.
+  Fix: withhold. Let the reader work out the situation. Put backstory where it
+  pays off instead of distributing it evenly.
+
+Kimi (K2.5): the generic center.
+  The fewest fingerprints and the lowest attribution score. It sits in the
+  middle of the AI cluster with no distinctive narrative choices; the few it
+  has are introducing characters in action, opening in medias res, and not
+  labeling traits explicitly.
+  Fix: there is no single quirk to remove. Apply the group moves in section 3,
+  because the problem is the absence of any distinctive choice.
+
+Human: the target, and the thing to protect.
+  The most distinctive source, and the most varied: human stories are more
+  spread out and more often unusual. Top human fingerprints include
+  introducing characters in dialogue, a single focal character, back-loaded
+  revelation, and crossover-genre ambition.
+  Fix: do not sand this off. When editing a human draft, preserve the odd
+  structural choices, the unresolved threads and the named specifics. They are
+  the part that reads as authored.
+
+
+5. NONFICTION ANALOGS  (editorial inference; not tested by the paper)
+====================================================================
+
+StoryScope studied fiction only. The mapping below is this command's own
+inference: the same habits appear to show up in essays, proposals and
+reports, and the same moves appear to help. Treat it as a hypothesis to apply
+with judgment, not a finding.
+
+Thematic over-determination.
+  Seen as: every example followed by "This shows that...", a closing
+  paragraph that states the takeaway, a thesis restated at the end of every
+  section.
+  Move: end on the strongest specific evidence and let the reader draw the
+  conclusion. State the argument once, where it is needed.
+
+Embodied and sensory overwriting.
+  Seen as: atmospheric scene-setting openers in reports ("The morning sun
+  rose over the factory floor as the team..."), and evaluative color in place
+  of measurement.
+  Move: lead with the fact or the finding. Keep description only where it is
+  evidence.
+
+Structural streamlining.
+  Seen as: one clean causal story with no dead ends, no rival explanations
+  and a resolution in which the author's recommendation fixes everything.
+  Move: include the approach that failed, the alternative explanation you
+  ruled out and why, and the question that is still open.
+
+Named references.
+  Seen as: "research shows", "studies suggest", "industry leaders".
+  Move: name the study, the dataset, the person, the year, or mark
+  [ADD: which study?]. This is the single most human signal in expository
+  writing, and it is the one that cannot be faked.
+
+Reader address.
+  Seen as: a document that never acknowledges its reader's actual decision,
+  constraint or likely objection.
+  Move: address the decision the reader has to make, and answer the objection
+  they will raise.
+
+Temporal complexity.
+  Seen as: strict chronology in a report whose reader wants the conclusion
+  first.
+  Move: lead with the result, then give the history that explains it.
+
+Narrative diversity.
+  Seen as: every section the same length and shape, every paragraph the same
+  topic-sentence, three-supports, wrap-up pattern.
+  Move: vary section length by importance. Let a short paragraph stand alone.
+  Let one section be a list and another an argument.

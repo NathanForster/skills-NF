@@ -1,0 +1,635 @@
+SURFACE PATTERNS: AI-TYPICAL WRITING AT THE SENTENCE AND FORMATTING LEVEL
+=========================================================================
+
+Source: the Wikipedia editors' guide "Signs of AI writing"
+(en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), paraphrased.
+That page is a community guide to spotting LLM text in encyclopedia articles.
+It is the best-maintained catalog of surface tells that exists, but it was
+written for one genre. Translate before applying: a travel blog is allowed to
+sound like a travel blog, and a grant proposal is allowed to argue for
+significance. The tells below are about formula and vagueness, not about
+register.
+
+Why these patterns exist. An LLM predicts the most likely continuation, so it
+drifts toward what applies to the widest range of cases. Specific, rare,
+checkable facts get replaced by generic, positive, unfalsifiable ones. The
+Wikipedia guide's example: "inventor of the first train-coupling device" turns
+into "a revolutionary titan of industry". The subject becomes simultaneously
+less specific and more exaggerated. Most fixes below are the same move in
+reverse: put the specific thing back.
+
+Density is what matters. One "crucial" proves nothing. A paragraph carrying a
+puffed-up significance claim, a weasel attribution, a participle tail and a
+triplet is a different matter. These words co-occur: where there is one, look
+for others.
+
+
+A. SIGNIFICANCE INFLATION AND PUFFERY
+=====================================
+
+A1. Legacy and broader trends
+-----------------------------
+The most reliable expository tell. The text asserts that some arbitrary
+detail represents, contributes to, or reflects something larger, with no
+source saying so.
+
+Watch: stands as, serves as, is a testament to, is a reminder, a crucial /
+pivotal / vital / significant / key role, a crucial / pivotal / key moment,
+underscores its importance, highlights its significance, reflects broader,
+symbolizing its ongoing / enduring / lasting, contributing to the broader,
+setting the stage for, marking a pivotal moment, represents a shift, marks a
+shift, key turning point, evolving landscape, focal point, indelible mark,
+deeply rooted, enduring legacy, transformative power, cemented its place,
+solidified its role, part of a broader movement, cornerstone of.
+
+Also watch the debate variant, where a subject is placed inside a discourse
+that no source shows exists: generated debate, sparked discussion, prompted
+broader reflection, raising philosophical questions, shaped emerging policy
+discussions, has participated in public discussions.
+
+Two sub-habits worth knowing:
+  - Hedge-then-inflate. "Though it saw only limited application, it
+    contributes to the broader history of early aviation engineering." The
+    hedge does not rescue the claim.
+  - Mundane subjects get it too. Etymology sections and population figures
+    end up "highlighting the enduring legacy" of something.
+  - Species and place articles over-connect the subject to its ecosystem and
+    belabor conservation status and preservation efforts even when the status
+    is unknown and no efforts exist.
+
+Fix: delete the claim, or replace it with the specific fact that would
+justify it and a source. If no source supports any significance claim, the
+sentence ends earlier than you expected. That is usually an improvement. When
+significance genuinely belongs (a proposal, a review, an argument), state who
+holds the view and on what evidence, and mark the gap as
+[ADD: source for this claim?] rather than inventing one.
+
+A2. Canned notability and media-coverage padding
+------------------------------------------------
+The text argues that the subject matters by describing the sources that
+mention it, and classifying those sources. More common in output from tools
+released in 2025 and later. The distinguishing feature is that attention sits
+on the characteristics of the sources themselves: their independence, their
+tier in the media landscape, whether they can be found by searching.
+
+Watch: independent coverage, local / regional / national media outlets,
+music / business / tech outlets, trade publications, cited in, featured in,
+profiled in, written by a leading expert, active social media presence,
+maintains a strong digital presence, was identified by, significant and
+sustained coverage, substantial secondary coverage, not trivial mentions,
+widely read outlets, syndicated through, regional press coverage, documented
+in archived programs, peer-reviewed sources.
+
+Note: press releases have cited news clippings for decades, so this is not
+AI-specific by itself. The AI version uses the phrasing above and often
+echoes the wording of notability rules, as though the case for including the
+text had leaked into the text.
+
+Fix: cut the meta-argument. Report what the source says, and cite it. "Wired
+profiled her work on AI governance" carries information; "her insights have
+been featured in Wired and other prominent media outlets" carries almost
+none. Remove "active social media presence" outright unless the account
+itself is the subject.
+
+A3. Superficial participle analysis
+-----------------------------------
+A present participle clause bolted to the end of a sentence, editorializing
+about what the preceding fact shows. This is the single highest-value edit in
+most expository drafts: the clauses are easy to spot, carry no information,
+and are usually unsourced interpretation.
+
+Watch (sentence-final, after a comma): highlighting ..., underscoring ...,
+emphasizing ..., reflecting ..., symbolizing ..., showcasing ...,
+demonstrating ..., illustrating ..., cementing ..., ensuring ...,
+contributing to ..., cultivating ..., fostering ..., encompassing ...,
+enhancing ..., reinforcing ..., positioning ... as, making it ...
+Also: valuable insights, align with, resonate with.
+
+Retrieval-capable models make this worse by attaching the invented
+interpretation to a real name: "Roger Ebert highlighted the lasting
+influence", whether or not Ebert said anything close.
+
+Fix: delete the clause. Check whether the sentence lost anything; usually it
+did not. If the interpretation matters, promote it to its own sentence with
+an attributed source, or mark [ADD: who says this?]. If a named source is
+attached, verify the source actually says it before keeping it.
+
+A4. Promotional tone
+--------------------
+Output drifts into advertisement or travel-guide register even when asked for
+neutral prose, and even when the writer has no promotional intent. This also
+happens during rewrites: an edit claiming to remove promotional tone can
+introduce it.
+
+Watch: boasts a, vibrant, rich, profound, enhancing, showcasing, exemplifies,
+commitment to, natural beauty, nestled, in the heart of, groundbreaking,
+renowned, featuring, diverse array, breathtaking, stunning, picturesque,
+charming, bustling, thriving, world-class, state-of-the-art, premier,
+unparalleled, must-visit, gateway to, glimpse into, hidden gem, worth
+visiting.
+
+Note: older models (GPT-4 era) were blatantly positive. Newer ones are
+subtly positive and avoid obvious superlatives like "the best", so absence of
+"the best" is not reassurance. Not all promotional writing is AI; the tell is
+that the same small set of promotional phrases appears regardless of topic.
+
+Fix: replace evaluation with description. "Nestled in the heart of the
+region, the town boasts a rich cultural heritage" becomes "The town is 40 km
+south of X. Its 12th-century church and annual textile fair draw ..." plus
+whatever is actually true and sourced. Keep the concrete nouns, drop the
+adjectives that rate rather than describe.
+
+
+B. VAGUE ATTRIBUTION
+====================
+
+B1. Weasel authorities
+----------------------
+Opinions get attributed to an unnamed collective, and the number of holders
+is inflated. One source becomes "scholars"; two become "widely regarded".
+
+Watch: industry reports, observers have cited, experts argue, some critics
+argue, several sources, several publications (when few are cited), many
+scholars, described in scholarship, modern researchers treat, according to
+sources, is widely regarded, it is generally accepted, commentators have,
+analysts say, reviewers praised, publications such as, outlets such as,
+is often cited as, such as (placed before a list that is in fact exhaustive).
+
+Fix: name the holder, or cut the claim. If one paper says it, say which paper.
+If the list is exhaustive, drop "such as". If you cannot identify who holds
+the view, mark [ADD: which experts? cite one] rather than keeping the
+collective.
+
+B2. Vague connection and association
+------------------------------------
+Instead of stating a relationship, the text gestures at one. This one is
+worth hunting because it often hides the fact that the relationship was never
+established.
+
+Watch: in connection with, connected with, connected to, in association with,
+associated with, particularly associated, widely associated, was linked to,
+has ties to, sources identified X as being associated with.
+
+Fix: state the relationship with a role and a date, or remove it. "In 2017,
+sources identified John Doe as being associated with leadership of
+ExampleCorp" becomes "Doe was ExampleCorp's CEO from 2017 to 2020" if that is
+true and sourced, and becomes nothing if it is not. Indirection alone is not
+proof of AI, but it is nearly always worse writing.
+
+B3. Knowledge-gap speculation
+-----------------------------
+The model reports the limits of its own retrieval as though that were a fact
+about the world, then speculates into the gap.
+
+Watch: up to my last training update, as of my last knowledge update, while
+specific details are limited, while specific details are scarce, not widely
+available, not widely documented, not publicly disclosed, in the provided
+sources, in the available search results, based on available information.
+Also the biography variants: maintains a low profile, keeps personal details
+private, prefers to keep their private life out of the public eye.
+
+The claim that something is undocumented is itself speculation, and the
+"likely" material that follows is invention.
+
+Fix: delete the whole construction, including the speculation it introduces.
+If the absence genuinely matters, say what you looked in and found nothing:
+"No birth date appears in [source]." Otherwise say nothing. Never keep a
+"likely" sentence.
+
+
+C. FORMULAIC STRUCTURE
+======================
+
+C1. Challenges and future prospects
+-----------------------------------
+A closing section that opens by conceding difficulty and closes on vague
+optimism. The tell is the rigid formula, not the mention of challenges.
+
+Watch: Despite its [positive adjective], X faces several challenges, Despite
+these challenges, Challenges and Legacy, Challenges and Opportunities,
+Future Outlook, Future Prospects, Future Directions, looking ahead, as the
+landscape continues to evolve, positions them as critical components,
+continues to thrive.
+
+Fix: delete the section, or replace it with named specifics: which constraint,
+measured how, according to whom, and what follows. If the draft needs a
+forward-looking section, it needs dated commitments and named actors, not
+"ongoing initiatives".
+
+C2. Restating summaries
+-----------------------
+Paragraphs and sections that end by restating what they just said, and
+"Conclusion" sections in documents that do not need one. Chiefly an older-model
+habit, still common in longer generated output.
+
+Watch: In summary, In conclusion, Overall, To summarize, Taken together,
+As discussed above, This section has shown.
+
+Fix: cut the restatement. If a summary earns its place (a long report, an
+abstract), make it carry the findings and numbers rather than the shape of the
+argument.
+
+C3. Heading problems
+--------------------
+  - Title case in headings: "Impact of Technology and Digitalization".
+    Most house styles use sentence case.
+  - A top-level heading repeating the document's own title, because the model
+    does not assume a title already exists.
+  - Headings that contain only other headings, with no text between them.
+  - Skipped heading levels, for instance jumping straight to level 3.
+  - Overuse of level 1 headings, often from Markdown converted badly.
+  - Thematic breaks (a horizontal rule) between every section.
+  - "X and Y" headings generally, and "Awards and recognition" or
+    "Recognition" in particular, which is close to ubiquitous in generated
+    biographies.
+
+Fix: sentence case; drop the duplicated title; give every heading its own
+prose or merge it upward; make levels consecutive; delete decorative rules;
+rename "Awards and recognition" to whatever the section actually contains, or
+fold two thin sections into one.
+
+C4. Inline bold-header lists
+----------------------------
+A list where each item starts with a bolded label, a colon, then a clause.
+Inherited from readmes, slide decks and listicles.
+
+Watch: "- **Scope:** ...", "- **Method**: ...", "1. **Background:** ...".
+Also non-standard bullet characters (a bullet glyph, hyphen, en dash, hash or
+emoji used as a list marker) and explicit "1." numbering where the format
+provides numbering already.
+
+Fix: if the items are parallel data, use a table or a real list without the
+bold. If they are argument, write prose. Keep the bold label pattern only
+where it is a genuine convention of the format, such as a changelog or API
+reference.
+
+C5. Unusual tables
+------------------
+Small, minimally formatted tables holding two or three facts that belong in a
+sentence or an infobox.
+
+Fix: inline anything under about four rows unless the reader will scan or sort
+it. Keep tables that carry parallel data across several dimensions.
+
+
+D. AI VOCABULARY
+================
+
+Studies consistently find LLMs overusing a specific, small vocabulary. These
+words began appearing far more often in text produced after late 2022, and
+they cluster: an edit introducing many of them many times is among the
+strongest available tells.
+
+Read this section literally. A word being overused by AI does not make its
+synonyms suspect. Keep context: "underscore" can mean a literal underline or
+incidental music, and "landscape" can be land.
+
+Core list: additionally (especially sentence-initial), align with, boasts
+(meaning has), bolstered, crucial, deep dive, delve, emphasizing, enduring,
+enhance, fostering, garner, highlight (as a verb), interplay, intricate,
+intricacies, key (as an adjective), landscape (as an abstract noun),
+meticulous, meticulously, pivotal, robust, showcase, tapestry (as an abstract
+noun), testament, underscore (as a verb), valuable, vibrant.
+
+By era. Not hard cutoffs, but a guide to how earlier and later output reads:
+  - 2023 to mid-2024 (GPT-4 era): additionally, boasts, bolstered, crucial,
+    delve, emphasizing, enduring, garner, intricate, intricacies, interplay,
+    key, landscape, meticulous, meticulously, pivotal, underscore, tapestry,
+    testament, valuable, vibrant.
+  - Mid-2024 to mid-2025 (GPT-4o era): align with, bolstered, crucial,
+    emphasizing, enhance, enduring, fostering, highlighting, pivotal,
+    showcasing, underscore, vibrant.
+  - Mid-2025 onward (GPT-5 era): emphasizing, enhance, highlighting,
+    showcasing, plus the notability and media-coverage vocabulary in A2.
+    The list narrows over time, so recent output leans on fewer words and
+    more on structure. Do not treat a clean vocabulary scan as a clean bill.
+
+Grok: distinctively overuses superficially scientific vocabulary such as
+causal, empirical and correlate, and still overuses underscore as of 2026.
+
+Fix: substitute the plain word that fits the sentence, one at a time, choosing
+by meaning rather than by thesaurus. Do not swap a whole column of them for a
+single alternative; that produces a new tell (see E4). Often the right move is
+deletion: "crucial" and "key" usually modify nothing, and the sentence reads
+better without a rating.
+
+
+E. GRAMMAR AND SYNTAX
+=====================
+
+E1. Copula avoidance
+--------------------
+LLM text avoids plain "is" and "are", replacing them with agentive or
+marketing verbs. One study measured a drop of more than 10 percent in the use
+of "is" and "are" in academic writing in 2023, with no comparable movement
+before that. The same decline shows up on Wikipedia, and is especially visible
+in AI copyedits, which "improve" plain sentences in this direction.
+
+Watch: serves as, stands as, marks, functions as, operates as, acts as,
+represents a, boasts, features, maintains, offers, refers to, holds the
+distinction of being, is characterized by. Also the elaborated forms common in
+recent output: "ventured into politics as a candidate" for "was a candidate",
+"began his career as" for "was".
+
+Do not confuse this with "has" in a perfect construction, as in "has been
+featured".
+
+Fix: restore is, are, was, has. "Gallery 825 serves as the association's
+exhibition space" becomes "Gallery 825 is the association's exhibition space".
+"The gallery features four separate spaces" becomes "The gallery has four
+spaces". In a lead sentence, "X refers to" usually wants to be "X is".
+
+E2. Negative parallelism
+------------------------
+Constructions that set up a wrong or incomplete reading and then correct it,
+as though the reader had to be talked out of something. Common in human
+writing too, but stereotypical of AI when frequent. Three forms:
+
+  - Not just X, but also Y. "Not only ... but ...", "It is not just ..., it's
+    ...", "should be encouraged, not belittled".
+  - Not X, but Y. "It's not ..., it's ...", "no ..., no ..., just ...".
+  - Y rather than X. The reversed form, particularly common in Grok output:
+    "prioritizing empirical consolidation of power rather than ideological
+    purity".
+
+Fix: state the claim once, positively. "The programme is not just a training
+scheme but a pipeline into the trades" becomes "The programme places
+graduates directly into apprenticeships". If the contrast is real and
+load-bearing, keep one instance and make the rejected reading one somebody
+actually holds.
+
+E3. Rule of three
+-----------------
+Three-item lists everywhere: three adjectives, three short phrases, three
+clauses. Often used to make a superficial analysis look comprehensive. The
+tell is strongest where nobody would bother with a flourish, such as a commit
+message or a status note.
+
+Fix: keep the items that carry distinct information and drop the rest. Two is
+usually the honest number, and one is often enough. Vary list length across a
+document. Watch for triplets in which the third item is a category ("and
+other factors", "and more"), which signals the list was padded to three.
+
+E4. Elegant variation
+---------------------
+Cycling synonyms for a repeated referent, so one thing is "non-conformist
+artists", then "like-minded artists", then "these artists", then "Russian
+avant-garde artists". Older models had repetition penalties that encouraged
+it. Now mostly a historical tell, and one you can easily reintroduce by
+editing.
+
+Caveat: writers taught in some school systems, including Italian, are trained
+to avoid repetition. This is not a reliable tell about a person.
+
+Fix: pick one name for a thing and reuse it. Repetition of a noun is normal
+English and reads as confident.
+
+E5. What human syntax looks like
+--------------------------------
+Over 25 years of Wikipedia text, these are more common in human writing than
+in AI output. Restoring them is the most effective phrasing-level move
+available, because it works with the grain of ordinary English rather than
+adding new ornament.
+
+  - Simple is and has phrases: there is a, it has a.
+  - Plain words where a stiff synonym exists: wrote over authored, moved over
+    relocated, used over utilized, tried over attempted, died over passed
+    away, bought over acquired, sent over transmitted.
+  - Superlative and definitive statements, where true and sourced: one of the
+    best, is the only, was the first. AI hedges away from commitment; humans
+    commit.
+  - Hedging qualifiers and intensifiers: very, perhaps, tends to, roughly,
+    about, mostly. A real hedge in the right place reads human; uniform
+    confidence does not.
+  - Ordinary wordy constructions, in isolation: as a result of, in order to,
+    all of the, a part of, the fact that. Do not scrub these on principle.
+
+Fix: read the draft looking for places where the plain construction was
+avoided, and put it back. This is where most of the "reads like a person"
+effect comes from.
+
+
+F. FORMATTING AND TYPOGRAPHY
+============================
+
+F1. Em dashes
+-------------
+LLM output uses em dashes more often than non-professional human writing in
+the same genre, and in slots where a comma, colon, parenthesis or full stop
+would be ordinary. The AI habit is formulaic: dashes used to punch up a
+clause or stage a parallelism. AI em dashes are usually surrounded by spaces,
+which most human em dash users do not do.
+
+Two facts that matter for 2026 editing:
+  - A July 2026 study found that of contemporary models, only Claude used em
+    dashes more than professional writers; ChatGPT used them less. So heavy
+    em dash use points at Claude specifically, and light use is not evidence
+    of human authorship.
+  - OpenAI suppressed the habit in GPT-5.1, and the Wikipedia guide now notes
+    that this sign may be heading for its historical-indicators list, since it
+    is getting rarer in current output.
+
+This tell is weak alone, stronger in combination, and much more common in
+discussion-style text than in formal article prose.
+
+Fix: replace most of them. A comma for an aside, a colon before a list or an
+explanation, parentheses for a true aside, a full stop where the clause is
+really a sentence. Keep a small number where the interruption is genuinely
+abrupt. If you keep any, close them up against the words unless your house
+style spaces them.
+
+F2. Boldface
+------------
+Mechanical emphasis: every instance of a chosen term bolded, or a "key
+takeaways" scatter across a paragraph. Inherited from readmes, fan wikis,
+how-tos, sales pitches, slide decks and listicles. Some newer models are
+instructed to hold back, so absence proves nothing.
+
+Fix: bold almost nothing in prose. Keep it for a defined term at first use,
+or for labels in a reference format that expects them. If several phrases in
+one paragraph are bold, the emphasis has cancelled out.
+
+F3. Emoji as formatting
+-----------------------
+Emoji decorating headings or bullet markers. Mostly seen in chat-style text
+and summaries, rarer in current output.
+
+Fix: delete them from headings and list markers. Keep them only where the
+channel makes them normal and the writer would use them anyway.
+
+F4. Curly quotation marks and apostrophes
+-----------------------------------------
+ChatGPT and DeepSeek typically produce curly quotes and curly apostrophes.
+Gemini and Claude typically do not. The more telling pattern is
+inconsistency: curly and straight marks mixed inside one passage.
+
+Curly quotes prove nothing on their own. Chicago style uses them, Word's
+smart quotes produce them, macOS and iOS do it by default, grammar tools do
+it, professionally typeset publications use them, and citation tools copy
+them out of page titles.
+
+Fix: make quote style consistent, following the house style if there is one.
+Do not convert curly to straight as an anti-AI measure; that is cosmetic and
+can break a house style. Consistency is the only real goal here.
+
+F5. Stray Markdown and broken markup
+------------------------------------
+Markdown surviving into a format that does not use it (asterisk emphasis,
+hash headings, pipe tables in a wiki or a Word document), and malformed markup
+generally.
+
+Fix: convert to the target format's own markup. Note that genuinely random
+markup errors point away from AI: those come from editors and buggy tools.
+
+
+G. CHATBOT LEFTOVERS AND RENDER ARTIFACTS
+=========================================
+
+Everything in G1 and G2 is deleted, not rewritten. None of it is content.
+
+G1. Conversational leftovers
+----------------------------
+Text meant as correspondence, advice or prewriting, pasted in with the draft.
+
+Watch: I hope this helps, Of course!, Certainly!, You're absolutely right,
+Would you like ..., is there anything else, let me know if, feel free to ask,
+more detailed breakdown, Here is a ..., Here's a template for, I hope this
+message finds you well, you can copy and paste, as an AI language model, as a
+large language model, I'm sorry, I cannot offer medical advice but.
+
+Also delete: instructions addressed to the writer ("ensure the content is
+presented in a neutral tone"), meta-commentary on what the section will do
+("In this section, we will discuss"), and offers of further help.
+
+G2. Render artifacts by tool
+----------------------------
+Internal citation and formatting machinery exposed in the output. These are
+unambiguous: no human types them.
+
+  - ChatGPT: :contentReference[oaicite:0]{index=0}, oai_citation, oaicite,
+    turn0search0 and other turn<N>search<N> tokens, attributableIndex,
+    a trailing "+1" standing in for a link.
+  - Gemini: [cite: 1], [cite: 3, 12, 13], [span_1](start_span).
+  - Grok: grok_card, grok-card data-id, grok_render_citation_card_json.
+  - DeepSeek: lenticular brackets with a dagger, as in the pattern
+    [full-width bracket] digits dagger L261-269 [closing bracket].
+  - Perplexity: [attached_file:1], [web:1], and citations pointing at an
+    Amazon S3 URL containing ppl-ai-file-upload.
+  - Unclassified: a fenced directive of the form :::writing{variant="document"
+    id=NNNNN}, sometimes with matching triple colons at the end.
+  - Tracking parameters appended to source URLs: utm_source=chatgpt.com,
+    utm_source=openai, utm_source=copilot.com, referrer=grok.com. Gemini and
+    Claude add these less often.
+
+Note on the URL parameters: they prove a tool touched the citation, not that
+it wrote the prose. Some writers use AI only to find sources.
+
+G3. Unfilled placeholders
+-------------------------
+Fill-in-the-blank templates the writer forgot to complete: [Describe the
+specific section that needs editing], [Specific Topic], [link to the revised
+article], [Language, e.g., non-English], [NUMBER], Lorem ipsum.
+
+Fix: fill them, or delete the sentence. Never leave one in a delivered draft.
+Placeholders you add deliberately in the form [ADD: ...] are different: they
+are a to-do list for the writer, and the command reports them separately so
+they can be resolved before the text ships.
+
+G4. Reference problems to flag, never to guess at
+-------------------------------------------------
+Fabricated citations are the most damaging AI failure and the one you must not
+paper over. Flag each of these for the writer to verify. Do not invent a
+replacement, do not "correct" an identifier, and do not delete a citation
+merely because it looks odd.
+
+  - Several broken external links in one new document, especially when the
+    URLs are not in the Internet Archive either. Watch out for innocent
+    explanations: paywalled or library-proxied links that work for others,
+    URLs mangled by a tool, and links missing their start or end from a
+    copy-paste.
+  - Invalid ISBN checksums.
+  - Unresolvable DOIs.
+  - DOIs that resolve to a real but unrelated article. This is the nastiest
+    case, because the citation looks verifiable until someone opens it.
+    Check author, year and title together: a plausible-looking reference can
+    name an author who was dead at the purported date of writing.
+  - Book citations with no page numbers and no URL.
+  - Named references defined but never cited in the text.
+
+Fix: mark each as [VERIFY: DOI resolves to a different article] or
+[VERIFY: link dead, not in archive] and list them in the change log. If the
+writer cannot verify a reference, the claim it supports has to come out.
+
+
+H. NOT RELIABLE TELLS, AND HOW WRONG EVERYONE IS
+================================================
+
+Do not "fix" these. Several of them point the other way, and editing them out
+makes writing worse while chasing a signal that was never there.
+
+  - Perfect grammar. Plenty of people write clean prose.
+  - Mixed casual and formal register, or prose that is both clinical and
+    emotional. This suggests a technical writer, youth, playfulness,
+    neurodivergence, or several authors in one document.
+  - "Bland" or "robotic" prose. LLM output has specific traits; generic
+    flatness is not one of them, and readers unfamiliar with AI writing often
+    find real AI text lively.
+  - "Fancy", academic or formal prose. LLMs overuse particular words. The
+    correlation does not extend to long words or formal registers in general.
+  - Transition words in isolation. Only a few are actually overused, and
+    essay-style writing has used them forever. Moderate use is fine.
+  - Curly quotes on their own (see F4).
+  - Unsourced content. Hundreds of thousands of pre-LLM documents lack
+    citations, and modern models with web access add citations freely. Their
+    citations are often wrong, but they exist.
+  - Bizarre or broken markup. Random-looking errors point at editors,
+    extensions and conversion bugs, not at LLMs.
+  - Correct markup. Getting the formatting right is normal.
+
+How accurate is anybody, including you:
+  - Detection tools beat chance but have non-trivial error rates, and they
+    degrade under paraphrasing, markup changes, spacing changes, and models
+    they were not trained on. A high detector score is not proof.
+  - One 2025 study found humans no better than chance at distinguishing LLM
+    text. Another, on German theses, found 57 percent recognition of AI text
+    and 64 percent of human text.
+  - Heavy LLM users reach roughly 90 percent. That still means about one false
+    positive in ten confident calls.
+  - Human writing is converging with LLM writing. The influence is measurable
+    in academic prose, in word choice and semantics, and even in speech from
+    2024 onward. The baseline is moving.
+  - Text written before 30 November 2022 predates general public access to
+    ChatGPT, so AI can be ruled out regardless of how it reads.
+
+Consequence for this command: describe text as reading as AI-typical. Never
+assert who or what wrote it. False accusations cost real people, and you will
+be wrong more often than you feel.
+
+
+I. MODEL-SPECIFIC NOTES
+=======================
+
+Every model and version has its own idiolect, and what is typical of GPT-5 is
+not typical of GPT-4 or of Gemini. Use these to interpret a draft, not to name
+a culprit.
+
+  - ChatGPT: curly quotes; utm_source=chatgpt.com on sources; the oaicite
+    family of render artifacts; strong focus on broader context and legacy;
+    longer output than Gemini or Claude. GPT-5.1 suppresses em dashes. Likely
+    the most widely used model for encyclopedia edits.
+  - Claude: as of July 2026, the one contemporary model using em dashes more
+    than professional writers; typically straight quotes, not curly; more
+    concise than ChatGPT and Grok; less inclined to the broader-context habit.
+  - Gemini: [cite: N] artifacts; typically straight quotes; concise; adds
+    tracking parameters less often.
+  - DeepSeek: curly quotes; lenticular-bracket citation artifacts.
+  - Grok: the "Y rather than X" construction; superficially scientific
+    vocabulary (causal, empirical, correlate); still overuses underscore in
+    2026; grok_card artifacts; referrer=grok.com; and a tendency to broader
+    context and to very long articles.
+  - Perplexity: [attached_file:N] and [web:N] tags; S3 citation URLs.
+
+One caution that applies to all of these: models are updated constantly, the
+vocabulary lists narrow over time, and vendors actively suppress known tells.
+Treat every item here as dated evidence rather than a standing rule, and weigh
+substance and structure above any of it.

@@ -1,11 +1,17 @@
 ---
-description: Review and edit text so it reads less like an LLM wrote it, fixing substance and structure before phrasing
+name: humanizer
+description: Review and edit text so it reads less like an LLM wrote it, fixing substance and structure before phrasing. Use when asked to humanize a draft, make writing sound less AI-generated, remove AI tells or chatbot leftovers, or review a document, essay, report or story for AI-typical patterns. Never invents facts; marks missing specifics with placeholders.
 argument-hint: '[file path or pasted text] [optional: "review only"]'
 ---
 
 # Humanizer
 
-Input: $ARGUMENTS
+The input is what the user typed after the skill name, or the text they asked
+you to work on. In Claude Code it may be appended at the end of these
+instructions as `ARGUMENTS: ...`.
+
+Paths below are relative to this skill's folder, the one containing this
+`SKILL.md`.
 
 The goal is better writing: specific, sourced, plainly structured prose that a
 reader trusts. It is not detector evasion. Edits that only make text harder to
@@ -51,12 +57,13 @@ different things.
 
 - **Expository or business text** (reports, articles, proposals, emails,
   documentation, essays): read
-  `C:/.ai/.claude/commands/humanizer/surface-patterns.txt`. For essays,
-  proposals and reports, also skim section 5 ("Nonfiction analogs") of
-  `C:/.ai/.claude/commands/humanizer/narrative-patterns.txt`.
-- **Fiction**: read `C:/.ai/.claude/commands/humanizer/narrative-patterns.txt`
-  first, then `surface-patterns.txt`. In fiction the structural tells matter
-  most, per fact (a).
+  [references/surface-patterns.txt](references/surface-patterns.txt). For
+  essays, proposals and reports, also skim section 5 ("Nonfiction analogs") of
+  [references/narrative-patterns.txt](references/narrative-patterns.txt).
+- **Fiction**: read
+  [references/narrative-patterns.txt](references/narrative-patterns.txt)
+  first, then [references/surface-patterns.txt](references/surface-patterns.txt).
+  In fiction the structural tells matter most, per fact (a).
 - **Chatbot leftovers** in any genre ("I hope this helps!", "Certainly!",
   offers of further help, render artifacts such as `contentReference[oaicite:0]`,
   unfilled template brackets) are deleted outright. They are not content, so
@@ -64,11 +71,17 @@ different things.
 
 ### 2. Scan, then read
 
-Run:
+Run the bundled scanner, [scripts/scan.py](scripts/scan.py), with Python 3
+(standard library only, nothing to install):
 
 ```
-python C:/.ai/.claude/commands/humanizer/scan.py FILE
+python "${CLAUDE_SKILL_DIR}/scripts/scan.py" FILE
 ```
+
+If that path still starts with a `${` placeholder when you read it, replace
+the placeholder with this skill's folder (the one containing this
+`SKILL.md`). Use `-` as FILE to read from stdin, and add `--json` for
+machine-readable output.
 
 Treat each hit as a lead, not a verdict. A single "crucial" means nothing.
 What matters is density, and clusters of different kinds of hit in the same

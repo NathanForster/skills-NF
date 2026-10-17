@@ -33,7 +33,7 @@ import sys
 # mixed_quotes is reported but NOT scored: both sources say quote style alone
 # is unreliable (Word, macOS, Chicago style and citation tools all produce
 # curly quotes), and scoring it would push edits toward the exact
-# overcorrection the command warns against.
+# overcorrection the humanizer skill warns against.
 
 WEIGHTS = {
     "render_artifacts": 5,

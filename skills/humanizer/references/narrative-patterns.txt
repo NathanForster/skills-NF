@@ -349,7 +349,7 @@ Human: the target, and the thing to protect.
 5. NONFICTION ANALOGS  (editorial inference; not tested by the paper)
 ====================================================================
 
-StoryScope studied fiction only. The mapping below is this command's own
+StoryScope studied fiction only. The mapping below is this skill's own
 inference: the same habits appear to show up in essays, proposals and
 reports, and the same moves appear to help. Treat it as a hypothesis to apply
 with judgment, not a finding.

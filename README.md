@@ -14,7 +14,7 @@ These commands are designed to be dropped into any project and used across sessi
 | [`/docs-review`](docs-review.md) | Deep review, cross-reference, and backfill of the docs folder, plus composite PDF rebuild |
 | [`/build-docs`](build-docs.md) | Build the consolidated documentation-set PDF (or render a single Markdown file) via the shared docset engine |
 | [`/run`](run.md) | Launch the project's app in a named mode, driven by a `RUN.md` mode registry |
-| [`/humanizer`](humanizer.md) | Edit text so it reads less like an LLM wrote it: substance and structure first, then phrasing |
+| [`/humanizer`](skills/humanizer/SKILL.md) | Edit text so it reads less like an LLM wrote it: substance and structure first, then phrasing. *Skill: works in Claude Code and GitHub Copilot.* |
 
 ## Installation
 
@@ -35,6 +35,17 @@ These commands are designed to be dropped into any project and used across sessi
    Or, to scope them to a single project, copy them into that repo's `.claude/commands/` directory instead — they travel with the project and are available to anyone who clones it.
 
 3. The commands are immediately available as `/command-name` in any Claude Code session.
+
+### Skills (Claude Code and GitHub Copilot)
+
+Entries under [`skills/`](skills/) use the open [Agent Skills](https://agentskills.io/specification) format: one folder per skill, with a `SKILL.md` and any bundled scripts and references. Both Claude Code and GitHub Copilot read it, so one copy serves both. Copy each skill folder (the whole folder, not just `SKILL.md`) into:
+
+```
+~/.claude/skills/<name>/     # Claude Code, and Copilot in VS Code
+~/.copilot/skills/<name>/    # Copilot CLI, and Copilot in VS Code
+```
+
+For a single project, put the folder in that repo's `.claude/skills/` instead. Claude Code, Copilot in VS Code, Copilot CLI and the Copilot cloud agent all read that location.
 
 ## Commands
 
@@ -189,16 +200,12 @@ Reviews and edits text so it reads less like an LLM wrote it. The aim is better 
 
 It edits in priority order: substance, then structure, then phrasing, then typography. That order comes from the StoryScope study (Russell et al., COLM 2026), where editing AI stories to remove cliches and purple prose barely dented a detector built on narrative choices (95.5% to 93.9% macro-F1). It never invents facts, names, quotes or citations. Where the text needs one, it inserts a placeholder instead.
 
-Support files live in [`humanizer/`](humanizer/):
+It is packaged as a skill, so it works in both Claude Code and GitHub Copilot (see [Skills](#skills-claude-code-and-github-copilot) for where to install it). Everything it needs lives in [`skills/humanizer/`](skills/humanizer/) and is referenced by relative path, so the folder works wherever it is copied:
 
-- `surface-patterns.txt`: sentence and formatting tells, paraphrased from Wikipedia's "Signs of AI writing", including what is *not* a reliable tell.
-- `narrative-patterns.txt`: StoryScope's 30 core narrative features with human vs AI rates, per-model fingerprints, and nonfiction analogs.
-- `scan.py`: a standard-library regex scanner (`python scan.py FILE [--json]`, `-` for stdin) that reports hits by category with line numbers and a weighted density band. Hits are leads, not verdicts.
-
-Two conventions to keep if you extend it:
-
-- Support docs use `.txt`, not `.md`. Claude Code loads every `.md` under `commands/` as a slash command, so a Markdown reference file would show up as a junk command.
-- The command reaches its support files by absolute path (`C:/.ai/.claude/commands/humanizer/...`), because commands do not resolve relative paths. If you clone this repo somewhere else, update those paths in `humanizer.md`.
+- `SKILL.md`: the instructions.
+- `references/surface-patterns.txt`: sentence and formatting tells, paraphrased from Wikipedia's "Signs of AI writing", including what is *not* a reliable tell.
+- `references/narrative-patterns.txt`: StoryScope's 30 core narrative features with human vs AI rates, per-model fingerprints, and nonfiction analogs.
+- `scripts/scan.py`: a standard-library regex scanner (`python scan.py FILE [--json]`, `-` for stdin) that reports hits by category with line numbers and a weighted density band. Hits are leads, not verdicts.
 
 ---
 

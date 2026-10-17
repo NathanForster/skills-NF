@@ -532,7 +532,7 @@ article], [Language, e.g., non-English], [NUMBER], Lorem ipsum.
 
 Fix: fill them, or delete the sentence. Never leave one in a delivered draft.
 Placeholders you add deliberately in the form [ADD: ...] are different: they
-are a to-do list for the writer, and the command reports them separately so
+are a to-do list for the writer, and the skill reports them separately so
 they can be resolved before the text ships.
 
 G4. Reference problems to flag, never to guess at
@@ -601,7 +601,7 @@ How accurate is anybody, including you:
   - Text written before 30 November 2022 predates general public access to
     ChatGPT, so AI can be ruled out regardless of how it reads.
 
-Consequence for this command: describe text as reading as AI-typical. Never
+Consequence for this skill: describe text as reading as AI-typical. Never
 assert who or what wrote it. False accusations cost real people, and you will
 be wrong more often than you feel.
 

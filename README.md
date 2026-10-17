@@ -1,4 +1,4 @@
-# claude-commands
+# skills-NF
 
 A collection of reusable skills for software development workflows, usable from both [Claude Code](https://claude.ai/code) and GitHub Copilot.
 
@@ -20,7 +20,7 @@ Each skill lives in its own folder under [`skills/`](skills/), in the open [Agen
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/NathanForster/claude-commands.git
+   git clone https://github.com/NathanForster/skills-NF.git
    ```
 
 2. Copy each skill folder you want (the whole folder, not just `SKILL.md`) into your personal skills directories:
@@ -117,8 +117,8 @@ Set this project up to build a consolidated documentation-set PDF using the shar
 docset engine (not a per-project copy).
 
 BACKGROUND
-- The shared engine lives in my Claude commands repo:
-  https://github.com/NathanForster/claude-commands  ->  lib/docset_builder.py
+- The shared engine lives in my skills repo:
+  https://github.com/NathanForster/skills-NF  ->  lib/docset_builder.py
 - On this machine it should be at:  ~/.claude/commands/lib/docset_builder.py
   (the user-level copy, synced from that repo). If it is missing, check the repo
   checkout (e.g. C:\.ai\.claude\commands\lib); if both are missing, tell me and

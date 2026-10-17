@@ -4,7 +4,7 @@ renders a single Markdown file to a standalone PDF. Project-agnostic — every
 project-specific detail (which documents, titles, cover text, paths) is supplied
 by the caller, either as a JSON config or by importing this module.
 
-This lives in the shared Claude commands repo so multiple projects share ONE copy
+This lives in the shared skills-NF repo so multiple projects share ONE copy
 of the (hard-won) table/heading pagination logic. See `/build-docs`.
 
 Requires: pymupdf, markdown-it-py, pypdf, beautifulsoup4

@@ -14,7 +14,7 @@ logic. Can also render a **single** Markdown file to a standalone PDF.
 The engine is loaded from **`~/.claude/commands/lib/docset_builder.py`** — the
 user-level copy that the sync script keeps current. Its master lives in the
 skills-NF repo (`lib/docset_builder.py`); fall back to that repo checkout
-(e.g. `C:\.ai\.claude\commands\lib\`) only if the user-level copy is missing.
+(e.g. `C:\.ai\skills-NF\lib\`) only if the user-level copy is missing.
 The engine deliberately lives outside this skill's folder: projects' own build
 scripts look for it at that path, so do not move it into the skill.
 Its public API: `build_docset(...)`, `render_markdown_file(...)`, `load_config(...)`.

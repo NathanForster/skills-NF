@@ -36,6 +36,20 @@ Each skill lives in its own folder under [`skills/`](skills/), in the open [Agen
 
 4. Start a new session. An already-open Claude Code session can keep serving a cached copy until its skill list refreshes.
 
+### Keeping installed copies in sync
+
+After editing a skill or `lib/`, run [`sync-skills.ps1`](sync-skills.ps1) from the repo, before committing:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\sync-skills.ps1
+```
+
+It copies every uncommitted change under `skills/` to each skills folder, and under `lib/` to `~/.claude/commands/lib/`. That includes deleting files and folders for skills you removed or renamed. Then it commits. Nothing else in the repo is ever copied: not the README, not the script, not `.env.example`.
+
+Only uncommitted changes are synced, so a change you commit first never gets copied. The script also doesn't do a first-time install: on a fresh clone the tree is clean, so use step 2 above.
+
+It needs no setup. It finds the repo from its own location and installs under your user profile. To install somewhere else on one machine, copy [`.env.example`](.env.example) to `.env` and set `COMMANDS_DIR` and/or `SKILL_DIRS`. Git ignores `.env`, so those paths stay local. A misspelled key is reported, not silently ignored.
+
 ### Where each skill can run
 
 Personal skills exist only on the machine they are installed on. The Copilot cloud agent runs on GitHub's machines, so it only sees skills committed to a repo, and cannot reach local paths or local tooling. `/handoff`, `/session-close`, `/build-docs` and `/run-mode` work with a local checkout, so use them from Claude Code, Copilot in VS Code or Copilot CLI. `/humanizer` and `/docs-review` carry what they need and also work as project skills.
@@ -121,7 +135,7 @@ BACKGROUND
   https://github.com/NathanForster/skills-NF  ->  lib/docset_builder.py
 - On this machine it should be at:  ~/.claude/commands/lib/docset_builder.py
   (the user-level copy, synced from that repo). If it is missing, check the repo
-  checkout (e.g. C:\.ai\.claude\commands\lib); if both are missing, tell me and
+  checkout (e.g. C:\.ai\skills-NF\lib); if both are missing, tell me and
   stop (I may need to `git pull` that repo and re-run its sync).
 - It renders Markdown -> PDF with automatic table column-fitting, cross-page header
   repetition, keep-heading-with-its-content, and silent-truncation verification.
@@ -131,7 +145,7 @@ BACKGROUND
 
 DO THIS
 1. Confirm the engine exists at one of: the CLAUDE_COMMANDS_LIB env var,
-   ~/.claude/commands/lib, or the repo checkout (e.g. C:\.ai\.claude\commands\lib).
+   ~/.claude/commands/lib, or the repo checkout (e.g. C:\.ai\skills-NF\lib).
    Read its module docstring for the current API/CLI.
 2. Inventory this project's docs/ folder. Propose a DOCSET.json structure --
    grouped into logical "parts", each doc with num/acr/file/title and a
@@ -154,7 +168,7 @@ DO THIS
    rationale. Template: ~/.claude/commands/lib/DOCSET.example.json)
 4. Add a thin build script at orchestrator/build_docset_pdf.py that locates the
    shared engine (env CLAUDE_COMMANDS_LIB -> ~/.claude/commands/lib -> the
-   repo checkout, e.g. C:\.ai\.claude\commands\lib), then calls
+   repo checkout, e.g. C:\.ai\skills-NF\lib), then calls
    db.load_config('DOCSET.json') + db.build_docset(...). Keeping a .py entry point
    means /docs-review and /build-docs find and run it. (Model it on FRIS_NET's
    orchestrator/build_docset_pdf.py.)

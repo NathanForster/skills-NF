@@ -1,5 +1,6 @@
 ---
-description: Session continuity helper — load context on start, update HANDOFF.md on end
+name: handoff
+description: Session continuity helper. On start, load the project's HANDOFF.md and summarize where work left off; on end, update HANDOFF.md and produce a session summary. Use when starting or resuming work on a project, or when wrapping up a session.
 argument-hint: start | end
 ---
 
@@ -11,7 +12,8 @@ Reads the project handoff document and either:
 
 ## Detecting mode
 
-Inspect `$ARGUMENTS`:
+Look at what the user typed after the skill name (in Claude Code it may be
+appended at the end as `ARGUMENTS: ...`):
 
 - `start` (or empty at the start of a new session): run **START mode**.
 - `end` (or `update`): run **END mode**.
@@ -88,7 +90,7 @@ context. Include:
 
 ### Step 4 — Commit the handoff file
 
-> **When invoked from `/session-close`:** skip this step. Session-close makes a
+> **When run as part of the session-close skill:** skip this step. Session-close makes a
 > single commit that already includes `HANDOFF.md`. Only commit here when
 > `/handoff end` was run on its own.
 
@@ -97,7 +99,8 @@ git add HANDOFF.md
 git commit -m "docs: update HANDOFF.md for session end <date>"
 ```
 
-Use `currentDate` from system context for `<date>`.
+Use today's date for `<date>` (check it with `Get-Date` or `date` if you are not
+sure of it).
 
 Ask the user whether to push the current branch: `git push origin HEAD`.
 

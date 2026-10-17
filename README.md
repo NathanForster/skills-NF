@@ -1,20 +1,20 @@
 # claude-commands
 
-A collection of reusable [Claude Code](https://claude.ai/code) slash commands for software development workflows.
+A collection of reusable skills for software development workflows, usable from both [Claude Code](https://claude.ai/code) and GitHub Copilot.
 
-These commands are designed to be dropped into any project and used across sessions, teams, or machines.
+Each skill lives in its own folder under [`skills/`](skills/), in the open [Agent Skills](https://agentskills.io/specification) format: a `SKILL.md` plus any scripts and references it bundles. Claude Code and GitHub Copilot (VS Code, Copilot CLI, cloud agent) both read that format, so one copy serves both tools. Invoke any skill as `/name`, or let the tool choose it from its description.
 
-## Commands at a glance
+## Skills at a glance
 
-| Command | What it does |
-|---------|--------------|
-| [`/handoff`](handoff.md) | Session continuity — load context at start, update `HANDOFF.md` at end |
-| [`/icm-validate`](icm-validate.md) | Audit ICM requirement statuses against code and pipeline artifacts |
-| [`/session-close`](session-close.md) | Full end-of-session checklist — validate, test, document, commit |
-| [`/docs-review`](docs-review.md) | Deep review, cross-reference, and backfill of the docs folder, plus composite PDF rebuild |
-| [`/build-docs`](build-docs.md) | Build the consolidated documentation-set PDF (or render a single Markdown file) via the shared docset engine |
-| [`/run`](run.md) | Launch the project's app in a named mode, driven by a `RUN.md` mode registry |
-| [`/humanizer`](skills/humanizer/SKILL.md) | Edit text so it reads less like an LLM wrote it: substance and structure first, then phrasing. *Skill: works in Claude Code and GitHub Copilot.* |
+| Skill | What it does |
+|-------|--------------|
+| [`/handoff`](skills/handoff/SKILL.md) | Session continuity — load context at start, update `HANDOFF.md` at end |
+| [`/icm-validate`](skills/icm-validate/SKILL.md) | Audit ICM requirement statuses against code and pipeline artifacts |
+| [`/session-close`](skills/session-close/SKILL.md) | Full end-of-session checklist — validate, test, document, commit |
+| [`/docs-review`](skills/docs-review/SKILL.md) | Deep review, cross-reference, and backfill of the docs folder, plus composite PDF rebuild |
+| [`/build-docs`](skills/build-docs/SKILL.md) | Build the consolidated documentation-set PDF (or render a single Markdown file) via the shared docset engine |
+| [`/run-mode`](skills/run-mode/SKILL.md) | Launch the project's app in a named mode, driven by a `RUN.md` mode registry |
+| [`/humanizer`](skills/humanizer/SKILL.md) | Edit text so it reads less like an LLM wrote it: substance and structure first, then phrasing |
 
 ## Installation
 
@@ -23,31 +23,24 @@ These commands are designed to be dropped into any project and used across sessi
    git clone https://github.com/NathanForster/claude-commands.git
    ```
 
-2. Copy the command files you want into your Claude Code user commands directory:
+2. Copy each skill folder you want (the whole folder, not just `SKILL.md`) into your personal skills directories:
    ```
-   # macOS / Linux
-   ~/.claude/commands/
-
-   # Windows
-   C:\Users\<you>\.claude\commands\
+   ~/.claude/skills/<name>/     # Claude Code, and Copilot in VS Code
+   ~/.copilot/skills/<name>/    # Copilot CLI, and Copilot in VS Code
    ```
+   On Windows, `~` is `C:\Users\<you>`.
 
-   Or, to scope them to a single project, copy them into that repo's `.claude/commands/` directory instead — they travel with the project and are available to anyone who clones it.
+   Or, to scope a skill to a single project, put its folder in that repo's `.claude/skills/`. Claude Code, Copilot in VS Code, Copilot CLI and the Copilot cloud agent all read that location, and the skill travels with the project.
 
-3. The commands are immediately available as `/command-name` in any Claude Code session.
+3. For `/build-docs`, also copy [`lib/`](lib/) to `~/.claude/commands/lib/`. That is where the shared docset engine is looked up, by the skill and by projects' own build scripts.
 
-### Skills (Claude Code and GitHub Copilot)
+4. Start a new session. An already-open Claude Code session can keep serving a cached copy until its skill list refreshes.
 
-Entries under [`skills/`](skills/) use the open [Agent Skills](https://agentskills.io/specification) format: one folder per skill, with a `SKILL.md` and any bundled scripts and references. Both Claude Code and GitHub Copilot read it, so one copy serves both. Copy each skill folder (the whole folder, not just `SKILL.md`) into:
+### Where each skill can run
 
-```
-~/.claude/skills/<name>/     # Claude Code, and Copilot in VS Code
-~/.copilot/skills/<name>/    # Copilot CLI, and Copilot in VS Code
-```
+Personal skills exist only on the machine they are installed on. The Copilot cloud agent runs on GitHub's machines, so it only sees skills committed to a repo, and cannot reach local paths or local tooling. `/handoff`, `/session-close`, `/build-docs` and `/run-mode` work with a local checkout, so use them from Claude Code, Copilot in VS Code or Copilot CLI. `/humanizer` and `/docs-review` carry what they need and also work as project skills.
 
-For a single project, put the folder in that repo's `.claude/skills/` instead. Claude Code, Copilot in VS Code, Copilot CLI and the Copilot cloud agent all read that location.
-
-## Commands
+## Skills
 
 ### `/handoff`
 
@@ -56,7 +49,7 @@ A session continuity helper that keeps long-running projects moving across Claud
 - `/handoff start` — Reads the project's `HANDOFF.md` and surfaces everything needed to resume work immediately: in-progress tasks, recent decisions, blockers, and next steps.
 - `/handoff end` — Prompts for what changed this session and updates `HANDOFF.md` so the next session starts clean.
 
-Pairs well with a `HANDOFF.md` file checked into your project root — if the file doesn't exist yet, the command offers to create it from a built-in template.
+Pairs well with a `HANDOFF.md` file checked into your project root — if the file doesn't exist yet, the skill offers to create it from a built-in template.
 
 ---
 
@@ -181,11 +174,11 @@ Notes:
 
 ---
 
-### `/run`
+### `/run-mode`
 
-Launches the project's app in a requested run mode — `/run <mode>`, or bare `/run` for the documented default.
+Launches the project's app in a requested run mode — `/run-mode <mode>`, or bare `/run-mode` for the documented default. (Formerly `/run`; renamed because Claude Code ships its own `run` skill, which hid this one.)
 
-The command carries no project knowledge of its own: a `RUN.md` in the project root is the source of truth, defining the available modes, each mode's launcher and arguments, the launch sequence, and any gates. If the project has no `RUN.md`, the command offers to bootstrap one from what's actually in the repo (launch scripts, README, CI config) — verifying each mode before writing it down.
+The skill carries no project knowledge of its own: a `RUN.md` in the project root is the source of truth, defining the available modes, each mode's launcher and arguments, the launch sequence, and any gates. If the project has no `RUN.md`, the skill offers to bootstrap one from what's actually in the repo (launch scripts, README, CI config) — verifying each mode before writing it down.
 
 Pairs with `RUN.md` the same way `/handoff` pairs with `HANDOFF.md`.
 
@@ -200,7 +193,7 @@ Reviews and edits text so it reads less like an LLM wrote it. The aim is better 
 
 It edits in priority order: substance, then structure, then phrasing, then typography. That order comes from the StoryScope study (Russell et al., COLM 2026), where editing AI stories to remove cliches and purple prose barely dented a detector built on narrative choices (95.5% to 93.9% macro-F1). It never invents facts, names, quotes or citations. Where the text needs one, it inserts a placeholder instead.
 
-It is packaged as a skill, so it works in both Claude Code and GitHub Copilot (see [Skills](#skills-claude-code-and-github-copilot) for where to install it). Everything it needs lives in [`skills/humanizer/`](skills/humanizer/) and is referenced by relative path, so the folder works wherever it is copied:
+Everything it needs lives in [`skills/humanizer/`](skills/humanizer/) and is referenced by relative path, so the folder works wherever it is copied:
 
 - `SKILL.md`: the instructions.
 - `references/surface-patterns.txt`: sentence and formatting tells, paraphrased from Wikipedia's "Signs of AI writing", including what is *not* a reliable tell.

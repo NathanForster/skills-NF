@@ -1,5 +1,6 @@
 ---
-description: Launch this project's app in a requested run mode. RUN.md in the project root is the mode registry and defines the launch procedure.
+name: run-mode
+description: Launch this project's app in a named run mode, following the RUN.md mode registry in the project root, which defines the modes, their launchers and the launch sequence. Use when the project has a RUN.md, or when asked to run or launch the app in a particular mode.
 argument-hint: "[mode - see RUN.md in the project root; empty = the documented default]"
 ---
 
@@ -7,14 +8,15 @@ argument-hint: "[mode - see RUN.md in the project root; empty = the documented d
 
 **`RUN.md` in the project root is the source of truth.** It defines the available
 modes, each mode's launcher and arguments, the launch procedure, and any rules that
-govern it. This command carries no project knowledge of its own — read RUN.md and do
+govern it. This skill carries no project knowledge of its own — read RUN.md and do
 what it says.
 
 ## Procedure
 
 1. **Read `RUN.md` in the project root.** If it does not exist, say so and stop — do
    not improvise a launch. Offer to create one (see *Bootstrapping* below).
-2. **Resolve `$ARGUMENTS`** case-insensitively against RUN.md's mode table(s).
+2. **Resolve the requested mode** (the text after the skill name; in Claude Code it
+   may be appended as `ARGUMENTS: ...`) case-insensitively against RUN.md's mode table(s).
    - Empty → the default RUN.md documents.
    - No match → list the available modes from RUN.md and stop.
 3. **Execute RUN.md's documented sequence in order**, honouring every rule and gate
@@ -37,7 +39,7 @@ what it says.
 ## Maintaining RUN.md
 
 RUN.md is data, not narrative. When a launcher, mode, or argument changes, update the
-table there — never hard-code project specifics into this command.
+table there — never hard-code project specifics into this skill.
 
 ## Bootstrapping a RUN.md
 

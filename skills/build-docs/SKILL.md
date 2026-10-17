@@ -1,5 +1,6 @@
 ---
-description: Build a project's consolidated documentation-set PDF (or render a single Markdown file) using the shared docset engine, driven by a DOCSET.json config or the project's own build script.
+name: build-docs
+description: Build a project's consolidated documentation-set PDF with the shared docset engine, driven by a DOCSET.json config or the project's own build script, or render a single Markdown file to PDF. Use when asked to build, rebuild or regenerate a docset or documentation PDF.
 argument-hint: "[empty = build the docset | single <in.md> <out.pdf> [landscape]]"
 ---
 
@@ -14,6 +15,8 @@ The engine is loaded from **`~/.claude/commands/lib/docset_builder.py`** — the
 user-level copy that the sync script keeps current. Its master lives in the
 claude-commands repo (`lib/docset_builder.py`); fall back to that repo checkout
 (e.g. `C:\.ai\.claude\commands\lib\`) only if the user-level copy is missing.
+The engine deliberately lives outside this skill's folder: projects' own build
+scripts look for it at that path, so do not move it into the skill.
 Its public API: `build_docset(...)`, `render_markdown_file(...)`, `load_config(...)`.
 
 **Requires** (in the project's Python): `pymupdf`, `markdown-it-py`, `pypdf`,
@@ -24,7 +27,11 @@ hand-assemble a PDF.
 
 ## Procedure
 
-### If `$ARGUMENTS` begins with `single`
+### If the user's input begins with `single`
+
+The input is the text after the skill name (in Claude Code it may be appended as
+`ARGUMENTS: ...`).
+
 Render one file: `single <in.md> <out.pdf> [landscape]`.
 
 ```
@@ -52,7 +59,7 @@ Report the output path and page count, then stop.
    composite build — the set is assembled from what is on disk, so a stale generated
    leaf ships silently. Read each generator's output: drift tripwires warn rather
    than fail. If one errors, stop and report; never build from a stale copy. Full
-   treatment in `/docs-review` Step 3.5.
+   treatment in Step 3.5 of the [docs-review skill](../docs-review/SKILL.md).
 
 3. **Run it** from the repo root, using the project's Python:
    - Build script: `python orchestrator/build_docset_pdf.py`
@@ -111,9 +118,9 @@ unverified structure is worse than none.
 
 ## Notes
 
-- This command **builds PDFs only** — it does not edit documents. For a
-  content review + rebuild, use `/docs-review` (its Step 4 runs this same build
-  script).
+- This skill **builds PDFs only** — it does not edit documents. For a
+  content review + rebuild, use the docs-review skill (its Step 4 runs this same
+  build script).
 - Prefer the project's build script / config over any manual PDF manipulation —
   the config is the source of truth for how the set is assembled.
 - To change which documents are in the set, edit `DOCSET.json` (or the project's

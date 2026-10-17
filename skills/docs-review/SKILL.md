@@ -1,6 +1,7 @@
 ---
-description: Deep review, cross-reference, and backfill of every document in docs/ (or documentation/), then rebuild the composite PDF
-argument-hint: [folder]
+name: docs-review
+description: Deep review, cross-reference and backfill of every document in a project's docs/ (or documentation/) folder, then regenerate derived documents and rebuild the composite PDF. Use when documentation needs a full accuracy pass against the code, or before a release or deliverable.
+argument-hint: '[folder]'
 ---
 
 # Docs Review & Update
@@ -18,7 +19,8 @@ do not skim.
 
 ## Step 0 — Locate the documentation folder
 
-If `$ARGUMENTS` names a folder, use it directly and skip detection (if it does
+If the user's input (the text after the skill name; in Claude Code it may be
+appended as `ARGUMENTS: ...`) names a folder, use it directly and skip detection (if it does
 not exist, stop and report). Otherwise find the docs folder, in this precedence
 order:
 
@@ -92,7 +94,7 @@ list of discrepancies:
      knowable from the code, requirements, git history, or build/test results.
    - Repair cross-references and align terminology/identifiers across documents.
    - Update `Updated:` / `Date:` / version fields on each modified document
-     (use `currentDate` from system context).
+     (today's date; check it with `Get-Date` or `date` if unsure).
 
 3. **Do not fabricate.** If a section needs information that genuinely does not
    exist yet (formal sign-offs, external results, contract numbers, real
@@ -210,7 +212,7 @@ Summarize:
 
 ## Notes
 
-- This command **reads and writes documentation only** plus running the PDF build
+- This skill **reads and writes documentation only** plus running the PDF build
   script — it does not modify source code. If a doc is wrong because the *code*
   changed, update the doc to match the code; if the code itself looks buggy, flag
   it for the user rather than editing it here.

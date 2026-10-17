@@ -1,6 +1,7 @@
 ---
-description: Audit ICM requirements against code and pipeline artifacts, update statuses
-argument-hint: [REQ-ID]
+name: icm-validate
+description: Audit ICM requirements against source code and pipeline artifacts, then update statuses in the requirements register and traceability matrix. Use to check which requirements are implemented or verified in an ICM-governed project, or to validate a single requirement by its REQ-ID.
+argument-hint: '[REQ-ID]'
 ---
 
 # ICM: Validate Implementation
@@ -9,7 +10,8 @@ Checks every requirement in the register against the actual source code AND the
 source-development pipeline artifacts, then updates the `Status` column in both
 the requirements register and the traceability matrix.
 
-**Scope:** if `$ARGUMENTS` names a requirement ID (e.g. `REQ-42`), validate only
+**Scope:** if the user's input (the text after the skill name; in Claude Code it
+may be appended as `ARGUMENTS: ...`) names a requirement ID (e.g. `REQ-42`), validate only
 that row — same checks, same findings table, same confirmation gate. Otherwise
 audit the full register.
 
@@ -76,7 +78,8 @@ audit the full register.
 
 ## Notes
 
-- Check the current date from the system context (`currentDate`) for the `Updated:` stamp.
+- Use today's date for the `Updated:` stamp (check it with `Get-Date` or `date` if
+  you are not sure of it).
 - If a requirement is partially implemented, set Status to `Implemented` but append
   `(partial — <gap description>)` in the Trace column so the gap is visible.
 - Do not mark anything `Verified` unless there is an explicit test in the
@@ -88,6 +91,6 @@ audit the full register.
   for the user — do not silently create new REQ IDs.
 - Canonical artifact naming: `input_<REQ-ID>_implementation.md` and
   `input_<REQ-ID>_validation.md`, where `<REQ-ID>` is the register's requirement
-  ID (e.g. `input_REQ-42_implementation.md`). This is the form `/session-close`
-  also expects. Treat the older `input_req<NN>_*` spelling as legacy — accept it
+  ID (e.g. `input_REQ-42_implementation.md`). This is the form the session-close
+  skill also expects. Treat the older `input_req<NN>_*` spelling as legacy — accept it
   when scanning, but write any new artifacts with the canonical form.

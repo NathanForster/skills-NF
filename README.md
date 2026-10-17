@@ -38,13 +38,15 @@ Each skill lives in its own folder under [`skills/`](skills/), in the open [Agen
 
 ### Keeping installed copies in sync
 
-After editing a skill or `lib/`, run [`sync-skills.ps1`](sync-skills.ps1) from the repo, before committing:
+After editing a skill or `lib/`, run [`sync-skills.cmd`](sync-skills.cmd) before committing. Double-click it in Explorer, or run it from any terminal:
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\sync-skills.ps1
+```
+sync-skills.cmd
 ```
 
-It copies every uncommitted change under `skills/` to each skills folder, and under `lib/` to `~/.claude/commands/lib/`. That includes deleting files and folders for skills you removed or renamed. Then it commits. Nothing else in the repo is ever copied: not the README, not the script, not `.env.example`.
+It runs [`sync-skills.ps1`](sync-skills.ps1) with the script execution policy bypassed for that one run. That matters because Windows' default policy refuses to run `.ps1` files at all, and the `.cmd` gets around it without changing the setting for the machine. When started directly (double-clicked, or run from PowerShell or Git Bash), it waits for a key before closing, so you can read the result. From an open cmd window it returns straight to the prompt.
+
+It copies every uncommitted change under `skills/` to each skills folder, and under `lib/` to `~/.claude/commands/lib/`. That includes deleting files and folders for skills you removed or renamed. Then it commits. Nothing else in the repo is ever copied: not the README, the two sync scripts or `.env.example`.
 
 Only uncommitted changes are synced, so a change you commit first never gets copied. The script also doesn't do a first-time install: on a fresh clone the tree is clean, so use step 2 above.
 

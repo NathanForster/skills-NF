@@ -1,0 +1,5 @@
+# cmd.exe can misread labels and some commands in batch files with LF-only line
+# endings. Pin CRLF so every clone gets it, whatever that machine's
+# core.autocrlf setting.
+*.cmd text eol=crlf
+*.bat text eol=crlf
